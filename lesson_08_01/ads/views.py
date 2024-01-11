@@ -4,9 +4,18 @@ from .models import Ad
 
 # Create your views here.
 
-def index(request: HttpRequest) -> HttpResponse:
+
+def index(request: HttpRequest, pk: int) -> HttpResponse:
+    ad = Ad.objects.get(pk=pk)
     template = loader.get_template('index.html')
-    context = {"ads": Ad.objects.all(), "test_var": "TEST"}
+    context = {"ad": ad}
+    return HttpResponse(template.render(context, request))
+
+
+def ad_list(request: HttpRequest) -> HttpResponse:
+    ads = Ad.objects.all()
+    template = loader.get_template('ad_list.html')
+    context = {"ads": ads}
     return HttpResponse(template.render(context, request))
 
 
@@ -14,3 +23,6 @@ def index(request: HttpRequest) -> HttpResponse:
     # for ad in Ad.objects.all():
     #     result += str(ad.name) + ' ' + str(ad.content) + ' ' + str(ad.price) + '\n'
     # return HttpResponse(result, content_type="text/plain; charset=utf-8")
+
+
+

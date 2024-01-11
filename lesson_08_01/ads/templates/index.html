@@ -5,15 +5,10 @@
     <title>Доска объявлений</title>
 </head>
 <body>
-    <h1>Список объявлений:</h1>
-    <h1>Переменная: {{ test_var }}</h1>
-    {% for ad in ads %}
-    <div>
-        <h2>{{ ad.name }}</h2>
-        <p>{{ ad.content }}</p>
-        <p>{{ ad.price }}</p>
-        <p>{{ ad.published }}</p>
-    </div>
-    {% endfor %}
+    <h1>Объявление {{ ad.name }}:</h1>
+    <p>{{ ad.content }}</p>
+    <p>{{ ad.price }}</p>
+    <p>{{ ad.publised }}</p>
+    <p>{{ ad.category.name }}</p>
 </body>
 </html>
