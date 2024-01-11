@@ -1,8 +1,16 @@
 from django.http import HttpResponse, HttpRequest
 from django.template import loader
 from .models import Ad
+from django.views.generic.edit import CreateView
+from .forms import AdForm
 
 # Create your views here.
+
+
+class AdCreateView(CreateView):
+    form_class = AdForm
+    template_name = 'ad_form.html'
+    success_url = '/app/'
 
 
 def index(request: HttpRequest, pk: int) -> HttpResponse:
