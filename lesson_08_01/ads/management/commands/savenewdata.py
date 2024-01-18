@@ -6,8 +6,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
 
-        new_ad = Ad.objects.create(name="Ad from custom command", author=author) # foreign key
-        new_ad.author = author # foreign key
+        new_ad = Ad.objects.create(name="Ad from custom command")
         new_ad.save()
         cat = Category.objects.create(name='Category from command')
         new_ad.category.add(cat)
