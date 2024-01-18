@@ -14,7 +14,10 @@ class AdCreateView(CreateView):
 
 
 def index(request: HttpRequest, pk: int) -> HttpResponse:
-    ad = Ad.objects.get(pk=pk)
+    try:
+        ad = Ad.objects.get(pk=pk)
+    except Ad.DoesNotExist:
+        return HttpResponse('Not found')
     template = loader.get_template('index.html')
     context = {"ad": ad}
     return HttpResponse(template.render(context, request))

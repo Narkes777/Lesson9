@@ -9,6 +9,9 @@ class Author(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 
+def get_first_author():
+    return Author.objects.first()
+
 class Ad(models.Model):
     STATUSES = ((None, 'Выберите статус рекламы'),
                 ('s', 'Продано'),
@@ -30,6 +33,10 @@ class Ad(models.Model):
     price = models.FloatField(null=True, blank=True, verbose_name="Цена")
     published = models.DateTimeField(auto_now_add=True, verbose_name="Дата публикации")
 
+    def title_and_price(self):
+        if self.price:
+            return f"{self.name} - {self.price}"
+
     class Meta:
         verbose_name = "Реклама"
         verbose_name_plural = "Рекламы"
@@ -39,6 +46,14 @@ class Ad(models.Model):
 
     def __str__(self):
         return self.name + ' ' + str(self.price)
+
+    def save(self, *args, **kwargs):
+        ad = super().save(*args, **kwargs) # None
+        print(ad)
+        return ad
+
+    def delete(self, *args, **kwargs):
+        super().delete(*args, **kwargs)
 
 
 class Category(models.Model):
@@ -67,6 +82,13 @@ class Category(models.Model):
 #     published = models.DateTimeField(auto_now=True)
 #     time_of_expiration = models.TimeField()
 #     bin_code = models.BinaryField()
+
+
+
+# 1) objects.get() - Поиск по уникальному полю -> Ad
+# 2) objects.all() - Все элементы
+# 3) objects.create() - создание модели без необходимости вызывать метод save() самостоятельно
+# 4) <название модели>_set - менеджер обратной связи (от первичной модели к вторичной)
 
 
 

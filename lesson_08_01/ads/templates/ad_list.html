@@ -8,9 +8,9 @@
     <h1>Список объявлений:</h1>
     {% for ad in ads %}
     <div>
+        <p>{{ ad.title_and_price }}</p>
         <p><a href="{% url 'ad_detail' ad.pk %}">{{ ad.name }}</a></p>
         <p>{{ ad.content }}</p>
-        <p>{{ ad.price }}</p>
     </div>
     {% endfor %}
 </body>
