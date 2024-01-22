@@ -23,7 +23,7 @@ class Post(models.Model):
     views = models.IntegerField()
     status = models.CharField(max_length=1, choices=STATUS, default='p')
     author_id = models.ForeignKey(Author, on_delete=models.CASCADE, null=True, blank=True)
-    categories = models.ManyToManyField('Category')
+    categories = models.ManyToManyField('Category', related_name='post_set')
 
     def __str__(self):
         return self.title
@@ -32,4 +32,5 @@ class Post(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
+    # post_set
 
