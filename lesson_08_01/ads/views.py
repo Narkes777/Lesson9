@@ -6,16 +6,15 @@ from .forms import AdForm
 
 # Create your views here.
 
-
 class AdCreateView(CreateView):
     form_class = AdForm
     template_name = 'ad_form.html'
     success_url = '/app/'
 
 
-def index(request: HttpRequest, pk: int) -> HttpResponse:
+def index(request: HttpRequest, **kwargs) -> HttpResponse: # pk=pk name=name
     try:
-        ad = Ad.objects.get(pk=pk)
+        ad = Ad.objects.get(**kwargs)
     except Ad.DoesNotExist:
         return HttpResponse('Not found')
     template = loader.get_template('index.html')

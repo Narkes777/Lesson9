@@ -22,7 +22,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     views = models.IntegerField()
     status = models.CharField(max_length=1, choices=STATUS, default='p')
-    author_id = models.ForeignKey(Author, on_delete=models.CASCADE, null=True, blank=True)
+    author_id = models.ForeignKey(Author, on_delete=models.CASCADE, null=True, blank=True, related_name='posts')
     categories = models.ManyToManyField('Category', related_name='post_set')
 
     def __str__(self):

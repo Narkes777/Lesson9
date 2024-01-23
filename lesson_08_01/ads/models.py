@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+import uuid
+
 # Create your models here.
 
 
@@ -24,10 +26,8 @@ class Ad(models.Model):
     # SET_DEFAULT - ставит значени по умолчанию
     # SET_NULL - ставит None
     # PROTECT - не дает удалить первичную модель
+    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4(), editable=False)
     name = models.CharField(max_length=50, verbose_name="Имя рекламы", help_text='Здесь заполняется имя рекламы', default='Имя по умолчанию', unique=True)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True, blank=True, related_name='ads') # default related_name = <название модели>_set
-    category = models.ManyToManyField('Category')
-    is_active = models.BooleanField(null=True, blank=True) # None
     status = models.CharField(max_length=1, choices=STATUSES, default='a', verbose_name='Статус рекламы')
     content = models.TextField(null=True, blank=True, verbose_name="Содержание рекламы", unique_for_year='published')
     price = models.FloatField(null=True, blank=True, verbose_name="Цена")
