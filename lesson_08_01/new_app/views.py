@@ -1,11 +1,62 @@
+from multiprocessing import context
+from .forms import PostForm
+from .forms import AuthorForm
+from re import template
 from django.shortcuts import render
 from .models import Post, Category
 from django.http import HttpResponse, HttpRequest, HttpResponseNotFound
 
 from django.shortcuts import get_object_or_404
+from django.template.loader import get_template
 
 # Create your views here.
 
+# def post_post_form(request: HttpRequest) -> HttpResponse:
+#     if request.method == 'POST':
+#         data = request.POST
+#         form = PostForm(data)
+#         if form.is_valid():
+#             form.save()
+#             return HttpResponse('Succesfully saved new post')
+#         else:
+#             return HttpResponse('Invalid data')
+#     else: 
+#         return HttpResponse(status=405)
+
+# def post_get_form(request: HttpRequest) -> HttpRequest:
+#     if request.method == 'POST':
+#         data = request.POST
+#         form = PostForm(data)
+#         if form.is_valid():
+#             form.save()
+#             return HttpResponse('Succesfully saved new post')
+#         else:
+#             return HttpResponse('Invalid data')
+#     else: 
+#         form = PostForm()
+#         context = {'form': form}
+#         return render(request, 'form.html', context)
+
+def author_get_form(request: HttpRequest) -> HttpRequest:
+    if request.method == 'POST':
+        data = request.POST
+        form = AuthorForm(data)
+        if form.is_valid():
+            form.save()
+            return HttpResponse('Succesfully saved new post')
+        else:
+            return HttpResponse('Invalid data')
+    else: 
+        form = AuthorForm()
+        context = {'form': form}
+        return render(request, 'author.html', context)
+
+
+def get_published_posts(request: HttpRequest) -> HttpResponse:
+    posts = Post.objects.filter(status='p')
+    template = get_template('published_post_list.html')
+    context = {"post_list": posts}
+    return HttpResponse(template.render(request=request, context=context))
 
 def post_detail(request: HttpRequest, pk: int) -> HttpResponse:
     post = get_object_or_404(Post, pk=pk)
